@@ -12,6 +12,12 @@
     <header>
         <h1 class= "H1" id="H1"> Ejemplo de pagina web</h1>  
         <br> <!--Salto de linea-->
+        <!-- Uso de javascript con id de elementos -->
+        <script>
+            document.getElementById("H1").addEventListener("click", function(){
+                alert("Hola")
+            })
+        </script>
     </header>
     <section class="main">
         <section class="links">    <!--Divisor de contenido div-->
@@ -24,13 +30,6 @@
                 <img src="imgs/yt.png" alt="yt_logo" width="25" height="20"> <li><a href="https://www.youtube.com" target="_blank" > Youtube</a></li>
             </ul>   
         </section>
-            <!-- Uso de javascript con id de elementos -->
-            <script>
-                document.getElementById("H1").addEventListener("click", function(){
-                    alert("Hola")
-                })
-            </script>
-        
             <aside class="follow">
                 <br>
                 <h2>Te sigo en Intagram?</h2>
@@ -41,12 +40,13 @@
                 </form>
             </aside>
             <br>
+    </section>
 
+    <section class="cards">
+        <h2> Image </h2>
+        <a href="#">Link</a>
     </section>
     
-
-
-
     <footer class="visit">
         <h2> Visitame</h2>
         <!-- Insercion de paginas en la misma pagina web con iframe -->
