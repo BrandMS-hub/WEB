@@ -6,9 +6,6 @@ const modal = document.querySelectorAll('.modalContainer');
 const opn = document.querySelectorAll('.form__group-btn-rec')[0];
 const cls = document.querySelectorAll('.close')[0];
 
-
-
-
 const expresiones = {
 	cliente: /^[a-zA-ZÀ-ÿ\s]{5,40}$/, // Letras y espacios, pueden llevar acentos.
 	porcentaje: /^[0-9][0-9]?$|^100$/, // porcentaje valido.
