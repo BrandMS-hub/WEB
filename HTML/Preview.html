@@ -19,7 +19,7 @@
                   <input type="text" class="form__input" name="Nombre" id="Nombre" placeholder="Escibr tu nombre">
                   <label for="Descrip">Breve descripción</label>
                   <input type="text" class="form__input" name="Descrip" id="Descrip" placeholder="Escribe algo sobre tí"><br>
-                  <button type="submit" class="btn__probar" id="btn__probar ">Probar <span class="fas fa-hand-point-down"></span></button>
+                  <button type="submit" class="btn__probar" id="btn__probar" value="submit">Probar <span class="fas fa-hand-point-down"></span></button>
             </form>
             <div class="Prev">
                   <div class="profile" id="profile">
@@ -34,24 +34,24 @@
       <script>
 
             const $form = document.querySelector(".Datos"),
-            $profile = document.getElementById("profile").content,
+            $profile = document.getElementById("profile"),
             $fragment = document.createDocumentFragment();
 
             const getAll = async ()=>{
-                  try {
+                  try{
                         let res = await axios.get("http://localhost:5000/users"),
                         json = await res.data;
                         console.log(json);
                         json.forEach(el => {
                               $profile.querySelector(".name").textContent = el.name;
                               $profile.querySelector(".description").textContent = el.descripcion;
-                              
+                              // $profile.querySelector(".btn__probar").dataset.id = el.id;
+                              let $clone = document.importNode($profile,true);
+                              $fragment.appendChild($clone); 
                         });
-
-                        
-                  } catch (err) {
+                  }catch (err){
                         let message = err.statusText || "Ocurrio un error";
-                        $form.insertAdjacentHTML("afterend",`<p><b>Error ${err.status}: ${message}</b></p>`);
+                        $form.insertAdjacentHTML("afterend",`<p style="color: red;"><b>Error ${err.status}: ${message}</b></p>`);
                   }
 
             }
