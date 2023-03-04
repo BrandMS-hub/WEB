@@ -11,6 +11,9 @@
 body{
       background: var(--fondo-oscuro);
 }
+main{
+      flex-grow: 1;
+}
 
 .profile{
       display: flex;

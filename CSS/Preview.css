@@ -85,6 +85,10 @@ body{
       border-radius: 50%;
       box-shadow: 4px 4px 4px white;
 }
+.profile .name{
+      font-size: xx-large;
+      font-family:monospace;
+}
 
 @media screen and (max-width:700px){
 
@@ -99,6 +103,9 @@ body{
       }
       .profile img{
             width: 40%;
+      }
+      .profile .name{
+            font-size: large;
       }
       .Prev{
             padding: 5px;
