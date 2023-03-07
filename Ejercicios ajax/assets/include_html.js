@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", e=>{
       const includeHTML = (el,url)=>{
-            const xhr = XMLHttpRequest();
+            const xhr = new XMLHttpRequest();
             xhr.addEventListener("readystatechange", e=>{
                   if(xhr.readyState !== 4) return;
                   if(xhr.status >= 200 && xhr.status < 300){
