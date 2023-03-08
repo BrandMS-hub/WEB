@@ -138,6 +138,7 @@
       <script>
             const formulario = document.getElementById('formu');
             const inputs = document.querySelectorAll('#formu input');
+            const response = document.getElementById('form__message-g');
 
             formulario.addEventListener("submit", (e)=>{
                   e.preventDefault();
@@ -149,16 +150,21 @@
                         .then(json=>{
                               console.log(json);
                               document.getElementById("form__message-g").classList.add("form__message-g-active");
-                              formulario.reset();
+                              setTimeout(()=>{
+                                    document.getElementById("form__message-g").classList.remove("form__message-g-active");
+                                    formulario.reset();
+                              },4000);
                         })
                         .catch(err=>{
                               console.log(err);
+                              let message = err.statusText || "Ocurrió un error al enviar el formulario, intenta nuevamente";
+                              response.innerHTML = `<p>Error ${err.status}: ${message}</p>`;
                         })
-                  // document.getElementById("form__message-g").classList.add("form__message-g-active");
-                  // setTimeout(() => {
-                  // document.getElementById("form__message-g").classList.remove("form__message-g-active");
-                  // location.reload();
-                  // }, 3000);
+                        .finally(()=>{
+                              setTimeout(() => {
+                                    response.innerHTML = "";
+                              }, 4000);
+                        })
             }); 
       </script>
       
