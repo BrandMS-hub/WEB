@@ -141,11 +141,24 @@
 
             formulario.addEventListener("submit", (e)=>{
                   e.preventDefault();
-                  document.getElementById("form__message-g").classList.add("form__message-g-active");
-                  setTimeout(() => {
-                  document.getElementById("form__message-g").classList.remove("form__message-g-active");
-                  location.reload();
-                  }, 3000);
+                  fetch("https://formsubmit.co/ajax/mapej94321@orgria.com",{
+                        method: "POST",
+                        body: new FormData(e.target)
+                  })
+                        .then(res=>res.ok ? res.json():Promise.reject(res))
+                        .then(json=>{
+                              console.log(json);
+                              document.getElementById("form__message-g").classList.add("form__message-g-active");
+                              formulario.reset();
+                        })
+                        .catch(err=>{
+                              console.log(err);
+                        })
+                  // document.getElementById("form__message-g").classList.add("form__message-g-active");
+                  // setTimeout(() => {
+                  // document.getElementById("form__message-g").classList.remove("form__message-g-active");
+                  // location.reload();
+                  // }, 3000);
             }); 
       </script>
       
