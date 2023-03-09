@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Mira estos pokes</title>
+      <style>
+            .loader{
+                  display: block;
+                  margin: auto;
+                  width: 10%;
+                  border-radius: 50%;
+            }
+      </style>
+</head> 
+<body>
+      
+      <h1 style="text-align: center;">Bienvenido!</h1>
+      <nav class="links"> </nav>
+      <main class="grid-fluid"> </main>
+      <script>
+            const main = document.querySelector("main"),
+            links = document.querySelector(".links");
+            
+            async function load_Pokemons(url){
+                  try {
+                        main.innerHTML = `<img class= "loader" src="../assets/loader.svg" alt="Cargando...">`;
+                        let res = await fetch(url),
+                        json = await res.json(),
+                        template = "",
+                        prev, next;
+                        console.log(json);
+                        if(!res.ok)throw{status: res.status, statusText: res.statusText}
+                        
+                        for( let i = 0; i<json.results.length; i++){
+                              try {
+                                    let res = await fetch(json.results[i].url),
+                                    poke = await res.json();
+                                    console.log(poke);
+                                    if(!res.ok)throw{status: res.status, statusText: res.statusText}
+                                    template += `
+                                    <figure>
+                                    <img src="${poke.sprites.front_shiny}" alt="${poke.name}">
+                                    <figcaption>${poke.name}</figcaption>
+                                    </figure>
+                                    `
+                              } catch (err) {
+                                    console.log(err);
+                                    let message = err.statusText||"Ocurrio un error"; 
+                                    template += `
+                                    <figcaption>${err.status}: ${message}</figcaption>
+                                    `
+                              }
+                        }
+                        main.innerHTML = template;
+                  } catch (err) {
+                  console.log(err);
+                  let message = err.statusText||"Ocurrio un error";
+                  main.innerHTML =`Error ${err.status}: ${message}`;
+
+                  }
+            }
+
+            document.addEventListener("DOMContentLoaded", e => load_Pokemons("https://pokeapi.co/api/v2/pokemon/"))
+
+      </script>
+</body>
+</html>
+
