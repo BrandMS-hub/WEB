@@ -51,13 +51,13 @@
                                     <img src="${poke.sprites.front_shiny}" alt="${poke.name}">
                                     <figcaption>${poke.name}</figcaption>
                                     </figure>
-                                    `
+                                    `;
                               } catch (err) {
                                     console.log(err);
                                     let message = err.statusText||"Ocurrio un error"; 
                                     template += `
                                     <figcaption>${err.status}: ${message}</figcaption>
-                                    `
+                                    `;
                               }
                         }
                         //Llenado de informacion//
