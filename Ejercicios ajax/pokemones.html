@@ -6,6 +6,14 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Mira estos pokes</title>
       <style>
+            html{
+                  text-align: center;
+            }
+            .grid-fluid{
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                  text-align: center;
+            }
             .loader{
                   display: block;
                   margin: auto;
@@ -16,7 +24,7 @@
 </head> 
 <body>
       
-      <h1 style="text-align: center;">Bienvenido!</h1>
+      <h1>Bienvenido!</h1>
       <nav class="links"> </nav>
       <main class="grid-fluid"> </main>
       <script>
@@ -37,7 +45,6 @@
                               try {
                                     let res = await fetch(json.results[i].url),
                                     poke = await res.json();
-                                    console.log(poke);
                                     if(!res.ok)throw{status: res.status, statusText: res.statusText}
                                     template += `
                                     <figure>
@@ -53,7 +60,12 @@
                                     `
                               }
                         }
+                        //Llenado de informacion//
                         main.innerHTML = template;
+                        prev = json.previous ? `<a href="${json.previous}">🢘</a>`:"";
+                        next = json.next ? `<a href="${json.next}">🢚</a>`:"";
+                        links.innerHTML = prev +" "+ next;
+
                   } catch (err) {
                   console.log(err);
                   let message = err.statusText||"Ocurrio un error";
@@ -63,7 +75,12 @@
             }
 
             document.addEventListener("DOMContentLoaded", e => load_Pokemons("https://pokeapi.co/api/v2/pokemon/"))
-
+            document.addEventListener("click", e =>{
+                  if(e.target.matches(".links a")){
+                        e.preventDefault();
+                        load_Pokemons(e.target.getAttribute("href"));
+                  }
+            })
       </script>
 </body>
 </html>
