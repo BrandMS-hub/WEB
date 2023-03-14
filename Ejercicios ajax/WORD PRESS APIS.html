@@ -7,13 +7,54 @@
       <title>APIS WP </title>
       <style>
             html{
+                  box-sizing: border-box;
                   text-align: center;
+                  font-size: large;
+            }
+            *, *:after, *:before{
+                  box-sizing: inherit;
             }
             .loader{
                   display: block;
                   margin: auto;
                   width: 10%;
                   border-radius: 50%;
+            }
+            img{
+                  max-width: 100%;
+                  height: auto;
+            }
+            hr{
+                  border: thin solid green;
+                  margin: 3rem auto;
+                  width: 80%;
+            }
+            .site{
+                  margin: 1rem auto;
+                  padding: 1rem;
+                  max-width: 50%;
+                  text-align: center;
+            }
+            .post{
+                  margin: 1rem auto;
+                  padding: 1rem;
+                  border-radius: .5rem;
+                  max-width: 80%;
+                  background-color: gray;
+            }
+            .post-author img{
+                  border-radius: 50%;
+            }
+            .post-content{
+                  text-align: left;
+            }
+            .post-content>article{
+                  padding: 1rem;
+                  background: white;
+            }
+            .post-content img{
+                  display: block;
+                  margin: auto;
             }
       </style>
 </head>
@@ -31,9 +72,7 @@
                         <small class="post-date"></small>
                         <a target="_blank" class="post-link">ir a la publicación</a>
                         <p class="post-excerpt"></p>
-                        <div class="post-category"></div>
-                        <div class="post-tags"></div>
-                        <details>
+                        <details class="post-content">
                               <summary>Ver contenido</summary>
                               <article></article>
                         </details>
@@ -51,8 +90,9 @@
             Site = `${Domain}/wp-json`,
             API = `${Site}/wp/v2`,
             Post = `${API}/posts?_embed`,
-            Pages = `${API}/pages`,
-            Categories = `${API}/categories`;
+            Pages = `${API}/pages`;
+
+            let Page = 1, Posts = 10;
 
              function Get_Datasite() {
                   fetch(Site).then(res => res.ok ? res.json():Promise.reject(res))
@@ -73,12 +113,19 @@
              }
              function Get_Posts() {
                   loader.style.display = "block";
-                  fetch(Post).then(res => res.ok ? res.json():Promise.reject(res))
+                  fetch(`${Post}&page=${Page}&per_page=${Posts}`).then(res => res.ok ? res.json():Promise.reject(res))
                   .then(json => {
                   console.log(json);
                         json.forEach(el => {
                               template.querySelector(".post-img").src = el._embedded["wp:featuredmedia"][0].source_url;
                               template.querySelector(".post-title").innerHTML = el.title.rendered;
+                              template.querySelector(".post-author").innerHTML = `  <img src="${el._embedded.author[0].avatar_urls["48"]}" alt="${el._embedded.author[0].name}">
+                                                                                    <figcaption>${el._embedded.author[0].name}</figcaption>`;
+                                                                                    
+                              template.querySelector(".post-date").innerHTML = new Date(el.date).toLocaleDateString();
+                              template.querySelector(".post-link").href = el.link;
+                              template.querySelector(".post-excerpt").innerHTML = el.excerpt.rendered;
+                              template.querySelector(".post-content > article").innerHTML = el.content.rendered;
                               let clone = document.importNode(template, true);
                               fragment.appendChild(clone); 
                         });
@@ -93,10 +140,16 @@
                         loader.style.display = "none";
                   }) 
              }
-
              document.addEventListener("DOMContentLoaded", e =>{
                   Get_Datasite();
                   Get_Posts();
+             })
+             window.addEventListener("scroll", e =>{
+                  const {scrollTop, clientHeight, scrollHeight} = document.documentElement;
+                  if (scrollTop + clientHeight >= scrollHeight) {
+                        Page ++;
+                        Get_Posts();
+                  }
              })
       </script>
 </body>
