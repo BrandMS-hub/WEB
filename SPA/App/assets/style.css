@@ -15,8 +15,12 @@ img{
       max-width: 100%;
       height: auto;
 }
+.header{
+      position: sticky;
+}
 .header >*{
       margin: 1.5rem auto;
+      
 }
 .error{
       padding: 1rem;
@@ -44,6 +48,7 @@ img{
       padding: 1rem;
       width: 85%;
       background-color: rgba(116, 114, 114, 0.8);
+      border-radius: 15px;
 }
 .Post_Card p{
       display: flex;

@@ -5,8 +5,10 @@ export function ajax(props){
       .then(json=> cbSuccess(json))
       .catch(err=>{
             console.log(err);
-            let message = err.statusText||"Ocurrio un error"; 
-            document.getElementById("root").innerHTML = `<div class="error"><p>${err.status}: ${message}</p></div>`;
+            let message = err.statusText||"Ocurrio un error";
+            document.getElementById("posts").innerHTML = `<div class="error"><p>${err.status}: ${message}</p></div>`;
+            document.querySelector(".loader").style.display = "none";
+
       })
 }
 

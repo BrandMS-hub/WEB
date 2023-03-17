@@ -4,7 +4,7 @@ export function Menu(){
       $Menu.innerHTML=`
       <a href="#/">Home</a>
       <span>-</span>
-      <a href="#/">Busqueda</a>
+      <a href="#/search">Busqueda</a>
       <span>-</span>
       <a href="https://www.youtube.com/shorts/xjZPdXGo1AY" target="_blank" rel=noopener>Datos</a>
       `;
