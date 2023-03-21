@@ -1,27 +1,32 @@
 import wp_api from "../helpers/wp_api.js";
 import { ajax } from "../helpers/ajax.js";
 import { Post_Card } from "./post_card.js";
+import { Post } from "./Post.js";
 
-export function Router(){
+export  async function Router(){
       let {hash} = location;
-
-      document.getElementById("posts").innerHTML=""
+      const $main = document.getElementById("main");
+      $main.innerHTML = "";
       if (!hash || hash === "#/") {
-            ajax({
+            await ajax({
                   url: wp_api.POSTS,
                   cbSuccess: (posts)=>{
                         let html ="";
                         console.log(posts);
                         posts.forEach(post => {html += Post_Card(post)});
-                        document.querySelector(".Loader").style.display="none";
-                        document.getElementById("posts").innerHTML= html;     
+                        $main.innerHTML = html;     
                   },
                });
       }else if(hash.includes("#/search")){
-            document.getElementById("posts").innerHTML="buscar"
-      }else{
-            
+            $main.innerHTML="buscar"
+      }else{     
+            await ajax({
+                  url: `${wp_api.POST}/${localStorage.getItem("WpPostID")}`,
+                  cbSuccess: (post)=>{
+                        $main.innerHTML = Post(post);
+                  },
+               });
       }
+      document.querySelector(".Loader").style.display="none";
 
-      
 }
