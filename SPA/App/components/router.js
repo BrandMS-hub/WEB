@@ -7,6 +7,7 @@ export  async function Router(){
       let {hash} = location;
       const $main = document.getElementById("main");
       $main.innerHTML = "";
+      // console.clear();
       if (!hash || hash === "#/") {
             await ajax({
                   url: wp_api.POSTS,
@@ -18,7 +19,16 @@ export  async function Router(){
                   },
                });
       }else if(hash.includes("#/search")){
-            $main.innerHTML="buscar"
+            let query = localStorage.getItem("WPsearch");
+            if (!query) return false;
+
+            await ajax({
+                  url: `${wp_api.SEARCH}${query}`,
+                  cbSuccess: (search)=>{
+                        console.log(search);
+                  }
+            });
+
       }else{     
             await ajax({
                   url: `${wp_api.POST}/${localStorage.getItem("WpPostID")}`,
