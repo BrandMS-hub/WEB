@@ -5,6 +5,10 @@ console.log(names);
 //       console.log(names[i]);
 // } //Clasic "for" printing all items of the array
 
+names.forEach(el => {
+      console.log(el);  
+});
+
 console.log(names.join(`--`)) //Another basic metod with join for printing in console all items in the array with "anything" parameter to separate
 
 //Objects
